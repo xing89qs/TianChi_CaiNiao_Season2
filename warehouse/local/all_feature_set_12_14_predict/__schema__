@@ -1,0 +1,4 @@
+project=local
+table=all_feature_set_12_14_predict
+columns=item_id:BIGINT,store_code:STRING,y:BIGINT,predicty:DOUBLE
+partitions=dt:STRING
