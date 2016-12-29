@@ -27,7 +27,7 @@
 - **模型**
 	- 评价函数
 		- 函数
-			- $C_N = \sum_i [A_i*MAX(D_i-T_i,0)+B_i*MAX(T_i-D_i,0)]$
+			- ![equation](http://latex.codecogs.com/gif.latex? C_N = \\sum_i [A_i*MAX(D_i-T_i,0)+B_i*MAX(T_i-D_i,0)] )
 			- 对于每个样本来说，补高和补低的成本是不一样的
 			> `Quantile Regression`
 			 - https://en.wikipedia.org/wiki/Quantile_regression
@@ -37,7 +37,7 @@
 	- 针对赛题结合**Quantile Regression**提出的模型
 		- 简单变形
 			- ![equation](http://latex.codecogs.com/gif.latex? C_N = \\sum_i A_i*[MAX(D_i-T_i,0)+B_i / A_i*MAX(T_i-D_i,0)] )
-		    - 于是，可以将$A_i$看作是样本权重， 剩下的部分直接就是`quantile loss`
+		    - 于是，可以将![equation](http://latex.codecogs.com/gif.latex? A_i ) 看作是样本权重， 剩下的部分直接就是`quantile loss`
 		    - 然后我们对每个商品的![equation](http://latex.codecogs.com/gif.latex? B_i / A_i ) 做了简单的统计，然后按这个值将所有样本划分为10个区间，每个区间14W个样本（其实就是近似认为同一个区间内的所有样本在quantile loss 中的![equation](http://latex.codecogs.com/gif.latex? \\alpha ) 参数一样）
 		- 最终单模型
 			- 对10个模型分别训练预测，简单的调节![equation](http://latex.codecogs.com/gif.latex? \\alpha ) 参数，即可得到一个很不错的结果。
