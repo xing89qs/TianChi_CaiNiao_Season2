@@ -29,10 +29,10 @@
 		- 函数
 			- ![equation](http://latex.codecogs.com/gif.latex? C_N = \\sum_i [A_i*MAX(D_i-T_i,0)+B_i*MAX(T_i-D_i,0)] )
 			- 对于每个样本来说，补高和补低的成本是不一样的
-> `Quantile Regression`
-	- https://en.wikipedia.org/wiki/Quantile_regression
-	- scikit-learn中的GradientBoostingRegression中支持 `loss = 'quantile'`	， 具体的loss function可以简单看做是在 **lad loss**（MAE）的基础上，对于补高和补低分开计算loss，使用一个参数 ![equation](http://latex.codecogs.com/gif.latex?  \\alpha ) 调整补高补低的比例。
-	- ![equation](http://latex.codecogs.com/gif.latex? error = \\alpha* |y^* - p |_{(y^*>p)} + (1-\\alpha)*|y^*-p|_{(y^*<p)} )
+		- `Quantile Regression`
+			- https://en.wikipedia.org/wiki/Quantile_regression
+			- scikit-learn中的GradientBoostingRegression中支持 `loss = 'quantile'`	， 具体的loss function可以简单看做是在 **lad loss**（MAE）的基础上，对于补高和补低分开计算loss，使用一个参数 ![equation](http://latex.codecogs.com/gif.latex?  \\alpha ) 调整补高补低的比例。
+			- ![equation](http://latex.codecogs.com/gif.latex? error = \\alpha* |y^* - p |_{(y^*>p)} + (1-\\alpha)*|y^*-p|_{(y^*<p)} )
 	
 	- 针对赛题结合**Quantile Regression**提出的模型
 		- 简单变形
