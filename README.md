@@ -32,15 +32,15 @@
 			> `Quantile Regression`
 			 - https://en.wikipedia.org/wiki/Quantile_regression
 			 - scikit-learn中的GradientBoostingRegression中支持 `loss = 'quantile'`	， 具体的loss function可以简单看做是在 **lad loss**（MAE）的基础上，对于补高和补低分开计算loss，使用一个参数 ![equation](http://latex.codecogs.com/gif.latex?  \\alpha ) 调整补高补低的比例。
-			 - ![equation](http://latex.codecogs.com/gif.latex? error = \alpha* |y^* - p |_{(y^*>p)} + (1-\alpha)*|y^*-p|_{(y^*<p)} )
+			 - ![equation](http://latex.codecogs.com/gif.latex? error = \\alpha* |y^* - p |_{(y^*>p)} + (1-\\alpha)*|y^*-p|_{(y^*<p)} )
 	
 	- 针对赛题结合**Quantile Regression**提出的模型
 		- 简单变形
-			- $C_N = \sum_i A_i*[MAX(D_i-T_i,0)+B_i / A_i*MAX(T_i-D_i,0)]$
+			- ![equation](http://latex.codecogs.com/gif.latex? C_N = \\sum_i A_i*[MAX(D_i-T_i,0)+B_i / A_i*MAX(T_i-D_i,0)] )
 		    - 于是，可以将$A_i$看作是样本权重， 剩下的部分直接就是`quantile loss`
-		    - 然后我们对每个商品的$B_i/A_i$做了简单的统计，然后按这个值将所有样本划分为10个区间，每个区间14W个样本（其实就是近似认为同一个区间内的所有样本在quantile loss 中的$\alpha$参数一样）
+		    - 然后我们对每个商品的![equation](http://latex.codecogs.com/gif.latex? B_i / A_i ) 做了简单的统计，然后按这个值将所有样本划分为10个区间，每个区间14W个样本（其实就是近似认为同一个区间内的所有样本在quantile loss 中的![equation](http://latex.codecogs.com/gif.latex? \\alpha ) 参数一样）
 		- 最终单模型
-			- 对10个模型分别训练预测，简单的调节$\alpha$参数，即可得到一个很不错的结果。
+			- 对10个模型分别训练预测，简单的调节![equation](http://latex.codecogs.com/gif.latex? \\alpha ) 参数，即可得到一个很不错的结果。
 		- 后续融合
 			- 我们最终只使用了GBRT一个模型，调整了其深度，学习率，行采样、列采样率进行平均融合。
 			- 分仓数据（0.3）和全国数据（0.7）加权融合
