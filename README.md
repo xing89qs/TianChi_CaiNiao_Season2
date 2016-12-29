@@ -34,24 +34,24 @@
 			 - scikit-learn中的GradientBoostingRegression中支持 `loss = 'quantile'`	， 具体的loss function可以简单看做是在 **lad loss**（MAE）的基础上，对于补高和补低分开计算loss，使用一个参数 $\alpha$调整补高补低的比例。
 			 - $error = \alpha* |y^* - p |_{(y^*>p)} + (1-\alpha)*|y^*-p|_{(y^*<p)}$
 	
-		- 针对赛题结合**Quantile Regression**提出的模型
-			- 简单变形
-				- $C_N = \sum_i A_i*[MAX(D_i-T_i,0)+B_i / A_i*MAX(T_i-D_i,0)]$
-			    - 于是，可以将$A_i$看作是样本权重， 剩下的部分直接就是`quantile loss`
-			    - 然后我们对每个商品的$B_i/A_i$做了简单的统计，然后按这个值将所有样本划分为10个区间，每个区间14W个样本（其实就是近似认为同一个区间内的所有样本在quantile loss 中的$\alpha$参数一样）
-			- 最终单模型
-				- 对10个模型分别训练预测，简单的调节$\alpha$参数，即可得到一个很不错的结果。
-			- 后续融合
-				- 我们最终只使用了GBRT一个模型，调整了其深度，学习率，行采样、列采样率进行平均融合。
-				- 分仓数据（0.3）和全国数据（0.7）加权融合
-		- 关于模型
-			- 在这次比赛中我参考了scikit-learn的源码实现了比较简单的Java的Decision Tree 及 GradientBoostingTree
-			- 很明显MapReduce下难以实现并行的GBRT，因此我们最后的结果就是10个模型并行在10个reducer上
-		- 后续提升idea
-			- 对label进行log变换
-			- 对新商品使用规则
-			- 使用我在广东机场大赛中实现的随机森林
-			- 增加特征、增加训练集。。。。
+	- 针对赛题结合**Quantile Regression**提出的模型
+		- 简单变形
+			- $C_N = \sum_i A_i*[MAX(D_i-T_i,0)+B_i / A_i*MAX(T_i-D_i,0)]$
+		    - 于是，可以将$A_i$看作是样本权重， 剩下的部分直接就是`quantile loss`
+		    - 然后我们对每个商品的$B_i/A_i$做了简单的统计，然后按这个值将所有样本划分为10个区间，每个区间14W个样本（其实就是近似认为同一个区间内的所有样本在quantile loss 中的$\alpha$参数一样）
+		- 最终单模型
+			- 对10个模型分别训练预测，简单的调节$\alpha$参数，即可得到一个很不错的结果。
+		- 后续融合
+			- 我们最终只使用了GBRT一个模型，调整了其深度，学习率，行采样、列采样率进行平均融合。
+			- 分仓数据（0.3）和全国数据（0.7）加权融合
+	- 关于模型
+		- 在这次比赛中我参考了scikit-learn的源码实现了比较简单的Java的Decision Tree 及 GradientBoostingTree
+		- 很明显MapReduce下难以实现并行的GBRT，因此我们最后的结果就是10个模型并行在10个reducer上
+	- 后续提升idea
+		- 对label进行log变换
+		- 对新商品使用规则
+		- 使用我在广东机场大赛中实现的随机森林
+		- 增加特征、增加训练集。。。。
 
 
 ### 欢迎各位大神交流指正
